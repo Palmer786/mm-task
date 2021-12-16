@@ -1,0 +1,173 @@
+form {
+  width: 1200px;
+  height: 675px;
+  background: white;
+  padding: 56px 100px;
+  overflow-y: auto;
+}
+
+.header {
+  height: 111px;
+
+  h1 {
+    font-size: 24px;
+  }
+
+  p {
+    font-size: 16px;
+    font-weight: 400;
+  }
+}
+
+.personal-data-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.personal-data {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 372px;
+  height: 334px;
+  border-right: 1px solid #b1b1b1;
+
+  p {
+    font-size: 12px;
+    color: #d32f2f;
+    font-weight: 500;
+  }
+}
+
+.personal-image {
+  width: 576px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  img {
+    width: 235px;
+    height: 235px;
+    user-select: none;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 316px;
+  height: 284px;
+
+  .empty {
+    width: 100%;
+    height: 56px;
+  }
+}
+
+.submit-button {
+  width: 320px;
+  height: 56px;
+  color: #fdfdfd;
+  background: #6358dd;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+}
+
+.bottom-section {
+  width: 100%;
+  height: 118px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+@media (max-width: 1199px) {
+  .personal-image {
+    width: 376px;
+    align-items: center;
+  }
+
+  .personal-data {
+    width: 372px;
+    height: 354px;
+  }
+
+  .form-control {
+    width: 316px;
+  }
+
+  form {
+    width: 1000px;
+  }
+
+  .bottom-section {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 1000px) {
+  form {
+    width: 450px;
+    padding: 32px 50px;
+  }
+
+  .personal-data-wrapper {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .personal-data {
+    border-right: none;
+    border-bottom: 1px solid #b1b1b1;
+    width: 100%;
+    align-items: center;
+
+    p {
+      margin-bottom: 25px;
+    }
+  }
+
+  .personal-image {
+    width: 100%;
+    height: 380px;
+  }
+}
+
+@media (max-width: 450px) {
+  form {
+    width: 100%;
+    height: 100vh;
+    padding: 16px 25px;
+  }
+
+  .form-control {
+    width: 100%;
+  }
+
+  .header {
+    height: 100px;
+
+    h1 {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+}
