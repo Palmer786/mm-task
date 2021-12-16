@@ -1,3 +1,7 @@
+## Link to app
+
+`https://mm-task.netlify.app/`
+
 ## Quick start
 1. Clone repository
 2. `npm install`
