@@ -1,4 +1,4 @@
-## Link to app
+## Link to the app
 
 `https://mm-task.netlify.app/`
 
