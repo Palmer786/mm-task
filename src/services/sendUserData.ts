@@ -1,26 +1,29 @@
-import React from "react";
 import api from "./axiosConfig";
-import { buildRequestBody } from "../components/AddContractor/userData.client";
-import { showNotification } from "../utils/notification";
-import { DataToTransform } from "../components/AddContractor/userData.interface";
+import { buildUserDataRequestBody } from "../components/AddContractor/userData.client";
+import { CombinedContractorData } from "../components/AddContractor/userData.interface";
 
-const sendUserData = async (
-  data: DataToTransform,
-  setUserError: React.Dispatch<React.SetStateAction<string>>
-) => {
+const sendUserData = async (data: CombinedContractorData) => {
+  let errorToDisplay = "";
   try {
     const response = await api.post(
       "Contractor/Save",
-      buildRequestBody({ ...data })
+      buildUserDataRequestBody({ ...data })
     );
-    showNotification("Sukces!", "Udało się wysłać dane", "danger");
-    console.log(response);
+    console.log(response.data);
   } catch (error: any) {
-    // Since there is no server hosted on this URL we won't receive any HTTP Status
-    showNotification("Błąd", "Nie znaleziono metody zapisu", "danger");
-    setUserError("Nie znaleziono metody zapisu");
-    console.log(error.message);
+    if (error.response) {
+      if (error.response.status === 404) {
+        errorToDisplay = "Nie znaleziono metody zapisu";
+      } else {
+        errorToDisplay = `${error.response.status} ${error.response.statusText}`;
+      }
+    } else {
+      // Since there is no server hosted on this URL we won't receive any HTTP Status
+      errorToDisplay = "Nie znaleziono metody zapisu";
+    }
   }
+
+  return errorToDisplay;
 };
 
 export default sendUserData;

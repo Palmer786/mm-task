@@ -1,15 +1,20 @@
 import {
-  Base,
+  BaseContractorData,
   Company,
-  DataToTransform,
+  CombinedContractorData,
   Person,
   UserType,
 } from "./userData.interface";
 
-export const buildRequestBody = (values: DataToTransform): Person | Company => {
+export const buildUserDataRequestBody = (
+  values: CombinedContractorData
+): Person | Company => {
   const { firstName, lastName, pesel, nip, type, image } = values;
 
-  const baseRequestBody: Pick<Base, "firstName" | "lastName" | "image"> = {
+  const baseRequestBody: Pick<
+    BaseContractorData,
+    "firstName" | "lastName" | "image"
+  > = {
     firstName: firstName,
     lastName: lastName,
     image: image,
@@ -17,10 +22,6 @@ export const buildRequestBody = (values: DataToTransform): Person | Company => {
 
   switch (type) {
     case UserType.PERSON:
-      if (!pesel) {
-        throw new Error("Pesel is required");
-      }
-
       return {
         ...baseRequestBody,
         pesel,
@@ -28,10 +29,6 @@ export const buildRequestBody = (values: DataToTransform): Person | Company => {
       };
 
     case UserType.COMPANY:
-      if (!nip) {
-        throw new Error("Nip is required");
-      }
-
       return {
         ...baseRequestBody,
         nip,

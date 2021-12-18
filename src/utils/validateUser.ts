@@ -1,4 +1,7 @@
-import { UserType } from "../components/AddContractor/userData.interface";
+import {
+  UserType,
+  UserValidationError,
+} from "../components/AddContractor/userData.interface";
 import isValidPesel from "../utils/isValidPesel";
 import isValidNip from "../utils/isValidNip";
 
@@ -9,22 +12,49 @@ export const validateUser = (
   nip: string,
   pesel: string
 ) => {
-  if (firstName.length < 3) return "Imię powinno mieć minimum 3 znaki";
+  let userValidationError: UserValidationError = {
+    firstName: "",
+    lastName: "",
+    type: "",
+    nip: "",
+    pesel: "",
+  };
+  let isUserValid = false;
 
-  if (firstName.length > 20)
-    return "Imię powinno mieć nie więcej niż 20 znaków";
+  if (!firstName) {
+    userValidationError.firstName = "Imię jest wymagane";
+  } else if (firstName.length < 3) {
+    userValidationError.firstName = "Imię powinno mieć minimum 3 znaki";
+  } else if (firstName.length > 20) {
+    userValidationError.firstName =
+      "Imię nie powinno mieć wiecej niż 20 znaków";
+  }
 
-  if (lastName.length < 3) return "Nazwisko powinno mieć minimum 3 znaki";
+  if (!lastName) {
+    userValidationError.lastName = "Nazwisko jest wymagane";
+  } else if (lastName.length < 3) {
+    userValidationError.lastName = "Nazwisko powinno mieć minimum 3 znaki";
+  } else if (lastName.length > 20) {
+    userValidationError.lastName =
+      "Nazwisko nie powinno mieć wiecej niż 20 znaków";
+  }
 
-  if (lastName.length > 20)
-    return "Nazwisko powinno mieć nie więcej niż 20 znaków";
+  if (!type) {
+    userValidationError.type = "Typ jest wymagany";
+  } else if (type !== UserType.PERSON && type !== UserType.COMPANY) {
+    userValidationError.type = "Nieobsługiwany typ użytkownika";
+  }
 
-  if (!type) return "Wybierz typ";
+  if (type === UserType.PERSON && !isValidPesel(pesel)) {
+    userValidationError.pesel = "Niepoprawny pesel";
+  }
 
-  if (type === UserType.PERSON && !isValidPesel(pesel))
-    return "Niepoprawny pesel";
+  if (type === UserType.COMPANY && !isValidNip(nip)) {
+    userValidationError.nip = "Niepoprawny nip";
+  }
 
-  if (type === UserType.COMPANY && !isValidNip(nip)) return "Niepoprawny nip";
-
-  return "";
+  if (Object.values(userValidationError).every((error) => !error)) {
+    isUserValid = true;
+  }
+  return { userValidationError, isUserValid };
 };
